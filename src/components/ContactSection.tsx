@@ -65,7 +65,7 @@ const ContactSection = () => {
                 <div>
                   <h4 className="font-semibold mb-1">Email</h4>
                   <p className="text-muted-foreground text-sm">
-                    contacto@aidataacademy.cl
+                    angelgabrieltroncoso2019@gmail.com
                   </p>
                 </div>
               </div>
