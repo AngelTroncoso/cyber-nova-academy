@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 
 const WhatsAppButton = () => {
-  const phoneNumber = "56912345678"; // User will update this
+  const phoneNumber = "56931393819";
   const message = encodeURIComponent(
     "¡Hola! Me interesa saber más sobre las clases de AI Data Academy 🚀"
   );
