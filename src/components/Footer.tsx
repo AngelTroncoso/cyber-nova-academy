@@ -39,7 +39,7 @@ const Footer = () => {
             viewport={{ once: true }}
           >
             {[
-              { icon: Twitter, href: "#", label: "Twitter" },
+              { icon: Twitter, href: "https://angeltroncoso.github.io/business_analytics_pro/", label: "Twitter" },
               { icon: Linkedin, href: "#", label: "LinkedIn" },
               { icon: Github, href: "#", label: "GitHub" },
             ].map((social) => (
