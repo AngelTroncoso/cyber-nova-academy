@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Send, Mail, MapPin, Clock } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const ContactSection = () => {
   const { toast } = useToast();
@@ -14,18 +15,36 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     setIsSubmitting(true);
 
-    // Simulate form submission - will integrate with Supabase later
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      const payload = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        message: formData.message.trim(),
+      };
 
-    toast({
-      title: "¡Mensaje enviado!",
-      description: "Te responderé lo antes posible.",
-    });
+      const { error } = await supabase.from("contact_messages").insert([payload]);
 
-    setFormData({ name: "", email: "", message: "" });
-    setIsSubmitting(false);
+      if (error) throw error;
+
+      toast({
+        title: "¡Mensaje enviado!",
+        description: "Te responderé lo antes posible.",
+      });
+
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err) {
+      console.error("Contact form error:", err);
+      toast({
+        title: "No se pudo enviar",
+        description: "Intenta nuevamente en unos segundos.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -38,15 +57,11 @@ const ContactSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <span className="text-primary font-display text-sm uppercase tracking-widest">
-            ¿Tienes Preguntas?
-          </span>
+          <span className="text-primary font-display text-sm uppercase tracking-widest">¿Tienes Preguntas?</span>
           <h2 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl mt-4 mb-6">
             <span className="text-primary neon-text-cyan">Contáctame</span>
           </h2>
-          <p className="text-muted-foreground">
-            Escríbeme y te responderé en menos de 24 horas.
-          </p>
+          <p className="text-muted-foreground">Escríbeme y te responderé en menos de 24 horas.</p>
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
@@ -64,9 +79,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold mb-1">Email</h4>
-                  <p className="text-muted-foreground text-sm">
-                    angelgabrieltroncoso2019@gmail.com
-                  </p>
+                  <p className="text-muted-foreground text-sm">angelgabrieltroncoso2019@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -78,9 +91,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold mb-1">Ubicación</h4>
-                  <p className="text-muted-foreground text-sm">
-                    Clases 100% online desde Chile 🇨🇱
-                  </p>
+                  <p className="text-muted-foreground text-sm">Clases 100% online desde Chile 🇨🇱</p>
                 </div>
               </div>
             </div>
@@ -92,9 +103,7 @@ const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold mb-1">Tiempo de Respuesta</h4>
-                  <p className="text-muted-foreground text-sm">
-                    Menos de 24 horas
-                  </p>
+                  <p className="text-muted-foreground text-sm">Menos de 24 horas</p>
                 </div>
               </div>
             </div>
@@ -115,9 +124,7 @@ const ContactSection = () => {
                   type="text"
                   required
                   value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none"
                   placeholder="Tu nombre"
                 />
@@ -129,9 +136,7 @@ const ContactSection = () => {
                   type="email"
                   required
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none"
                   placeholder="tu@email.com"
                 />
@@ -143,9 +148,7 @@ const ContactSection = () => {
                   required
                   rows={4}
                   value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-muted/50 border border-border focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none resize-none"
                   placeholder="¿En qué puedo ayudarte?"
                 />
