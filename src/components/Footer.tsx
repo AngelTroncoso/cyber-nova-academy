@@ -40,7 +40,7 @@ const Footer = () => {
           >
             {[
               { icon: Twitter, href: "https://angeltroncoso.github.io/business_analytics_pro/", label: "Twitter" },
-              { icon: Linkedin, href: "#", label: "LinkedIn" },
+              { icon: Linkedin, href: "www.linkedin.com/in/angeltroncoso", label: "LinkedIn" },
               { icon: Github, href: "#", label: "GitHub" },
             ].map((social) => (
               <a
