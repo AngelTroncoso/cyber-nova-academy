@@ -5,8 +5,9 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 // ✅ Pega aquí tus datos
-const GOOGLE_SCRIPT_URL = "PEGA_AQUI_TU_URL_/exec";
-const GOOGLE_SCRIPT_TOKEN = "PEGA_AQUI_TU_TOKEN_SECRETO";
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbxb8KZcf3HGl-L3XkM_PR1Rp8Lw7K0E8j0e9_pNZVat0nHP8DCOUTGw12V_egjWEG2J/exec";
+const GOOGLE_SCRIPT_TOKEN = "esteesmitokensecretoparamiproyectopersonaldelovable";
 
 const ContactSection = () => {
   const { toast } = useToast();
