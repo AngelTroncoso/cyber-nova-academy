@@ -4,6 +4,10 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
+// ✅ Pega aquí tus datos
+const GOOGLE_SCRIPT_URL = "PEGA_AQUI_TU_URL_/exec";
+const GOOGLE_SCRIPT_TOKEN = "PEGA_AQUI_TU_TOKEN_SECRETO";
+
 const ContactSection = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
@@ -26,9 +30,25 @@ const ContactSection = () => {
         message: formData.message.trim(),
       };
 
+      // 1) Guardar en Supabase
       const { error } = await supabase.from("contact_messages").insert([payload]);
-
       if (error) throw error;
+
+      // 2) Enviar correo por Google Apps Script
+      //    ✅ Usamos text/plain para evitar preflight CORS
+      const res = await fetch(GOOGLE_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          token: GOOGLE_SCRIPT_TOKEN,
+          ...payload,
+        }),
+      });
+
+      if (!res.ok) {
+        const details = await res.text().catch(() => "");
+        throw new Error(`Apps Script error: ${res.status} ${details}`);
+      }
 
       toast({
         title: "¡Mensaje enviado!",
