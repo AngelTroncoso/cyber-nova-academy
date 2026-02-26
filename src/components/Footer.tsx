@@ -41,7 +41,7 @@ const Footer = () => {
             {[
               { icon: Twitter, href: "https://angeltroncoso.github.io/business_analytics_pro/", label: "Twitter" },
               { icon: Linkedin, href: "www.linkedin.com/in/angeltroncoso", label: "LinkedIn" },
-              { icon: Github, href: "#", label: "GitHub" },
+              { icon: Github, href: "https://github.com/AngelTroncoso", label: "GitHub" },
             ].map((social) => (
               <a
                 key={social.label}
