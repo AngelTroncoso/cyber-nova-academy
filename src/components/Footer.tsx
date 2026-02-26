@@ -1,7 +1,21 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Twitter, Heart } from "lucide-react";
 
+const normalizeUrl = (url: string) => {
+  // Asegura que siempre sea URL absoluta (evita que el router lo trate como ruta interna)
+  if (!url) return "#";
+  return url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`;
+};
+
 const Footer = () => {
+  const socials = [
+    // Cambia esto por tu Twitter real si corresponde:
+    // { icon: Twitter, href: "https://twitter.com/TU_USUARIO", label: "Twitter" },
+    { icon: Twitter, href: "https://angeltroncoso.github.io/business_analytics_pro/", label: "Twitter" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/angeltroncoso/", label: "LinkedIn" },
+    { icon: Github, href: "https://github.com/AngelTroncoso", label: "GitHub" },
+  ];
+
   return (
     <footer className="relative py-12 border-t border-border/50">
       <div className="container mx-auto px-4">
@@ -38,11 +52,7 @@ const Footer = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            {[
-              { icon: Twitter, href: "https://angeltroncoso.github.io/business_analytics_pro/", label: "Twitter" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/angeltroncoso/", label: "LinkedIn" },
-              { icon: Github, href: "https://github.com/AngelTroncoso", label: "GitHub" },
-            ].map((social) => (
+            {socials.map((social) => (
               <a
                 key={social.label}
                 href={normalizeUrl(social.href)}
