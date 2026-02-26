@@ -45,7 +45,9 @@ const Footer = () => {
             ].map((social) => (
               <a
                 key={social.label}
-                href={social.href}
+                href={normalizeUrl(social.href)}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={social.label}
                 className="w-10 h-10 rounded-lg glass-card flex items-center justify-center text-muted-foreground hover:text-primary hover:neon-glow-cyan transition-all"
               >
